@@ -1,6 +1,3 @@
-﻿using System.Drawing.Text;
-using TestWins.Controller;
-
 using System.Drawing.Text;
 using TestWins.Controller;
 
@@ -37,68 +34,60 @@ public partial class Form1 : Form
 
     private void btnAdd_Click(object sender, EventArgs e)
     {
-        var student = new Student
+        var student = new TestWins.Model.Student
         {
-            studentId = Guid.NewGuid().ToString(),
+            studentId = txtStudentId.Text,
             Name = txtName.Text,
-            age = int.TryParse(txtAge.Text, out int a) ? a : 0,
+            age = int.Parse(txtAge.Text),
             course = txtCourse.Text
         };
 
         controller.createStudent(student);
-        LoadData();
-        ClearInputs();
+        loadData();
+        clearFields();
     }
 
     private void btnUpdate_Click(object sender, EventArgs e)
     {
-        var currentRow = dataGridView1.CurrentRow;
-        if (currentRow == null) return;
-
-        var id = currentRow.Cells["studentId"]?.Value?.ToString();
-        if (string.IsNullOrEmpty(id)) return;
-
-        var student = new Student
+        var student = new TestWins.Model.Student
         {
-            studentId = id,
+            studentId = txtStudentId.Text,
             Name = txtName.Text,
-            age = int.TryParse(txtAge.Text, out int a) ? a : 0,
+            age = int.Parse(txtAge.Text),
             course = txtCourse.Text
         };
 
         controller.update(student);
-        LoadData();
-        ClearInputs();
+        loadData();
+        clearFields();
     }
 
     private void btnDelete_Click(object sender, EventArgs e)
     {
-        var currentRow = dataGridView1.CurrentRow;
-        if (currentRow == null) return;
-
-        var id = currentRow.Cells["studentId"]?.Value?.ToString();
-        if (string.IsNullOrEmpty(id)) return;
-
-        controller.delete(id);
-        LoadData();
-        ClearInputs();
+        controller.delete(txtStudentId.Text);
+        loadData();
+        clearFields();
     }
 
-    private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+    private void dataGridView1_CellClick(object sender, EventArgs e)
     {
-        if (e.RowIndex < 0) return;
-
-        var row = dataGridView1.Rows[e.RowIndex];
-        txtName.Text = row.Cells["Name"]?.Value?.ToString() ?? "";
-        txtAge.Text = row.Cells["age"]?.Value?.ToString() ?? "";
-        txtCourse.Text = row.Cells["course"]?.Value?.ToString() ?? "";
+        if (dataGridView1.CurrentRow != null)
+        {
+            DataGridViewRow row = dataGridView1.CurrentRow;
+            txtStudentId.Text = row.Cells[0].Value.ToString();
+            txtName.Text = row.Cells[1].Value.ToString();
+            txtAge.Text = row.Cells[2].Value.ToString();
+            txtCourse.Text = row.Cells[3].Value.ToString();
+        }
     }
 
-    private void ClearInputs()
+    private void clearFields()
     {
+        txtStudentId.Text = "";
         txtName.Text = "";
         txtAge.Text = "";
         txtCourse.Text = "";
     }
 
 }
+
