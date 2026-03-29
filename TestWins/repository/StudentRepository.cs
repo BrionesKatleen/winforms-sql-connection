@@ -16,7 +16,7 @@ public class StudentRepository
         using var conn = _db.connectSql(); //Connection
         conn.Open(); //Open Connection
 
-        string query = "INSERT INTO students VALUES(@name, @age, @course)";
+        string query = "INSERT INTO (name, age, course) students VALUES(@name, @age, @course)";
 
         using var cmd = new MySqlCommand(query, conn);
 
@@ -56,7 +56,7 @@ public class StudentRepository
         using var conn = _db.connectSql();
         conn.Open();
 
-        string query = "UPDATE students SET name = @name, age=@age, course=@course where studentId = @ID";
+        string query = "UPDATE students SET name = @name, age=@age, course=@course where studentId = @id";
 
         using var cmd = new MySqlCommand(query, conn);
 

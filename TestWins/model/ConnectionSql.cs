@@ -15,7 +15,7 @@ public class ConnectionSql
 
         _conn = new MySqlConnection(_connectionString);
 
-        Console.WriteLine(_conn == null ? "Datbase Connection Failed" : "Database connection successful");
+        Console.WriteLine(_conn == null ? "Database Connection Failed" : "Database connection successful");
 
         return _conn;
     }
